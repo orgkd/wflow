@@ -1,0 +1,24 @@
+{
+  "name": "wflow",
+  "main": "wflow.js",
+  "authors": [
+    "Alex O. <organ.a.f@gmail.com>"
+  ],
+  "description": "Script for visualization of simple workflow using SVG",
+  "keywords": [
+    "workflow"
+  ],
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "svg.js": "^2.3.0",
+    "jquery": "^2.2.3"
+  }
+}
