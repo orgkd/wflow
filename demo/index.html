@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>wflow.js - Representation of simple workflows with SVG</title>
+    <link href='https://fonts.googleapis.com/css?family=Roboto:400,300' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="../bower_components/highlight/src/styles/github.css">
+    <link rel="stylesheet" href="../styles/index.css" type="text/css" />
+    <style type="text/css">
+        html, body{
+            font-family: Roboto, sanf-serif;
+        }
+        h1, h2, h3{
+            font-weight: lighter;
+        }
+        .main, .header{
+            width: 50%;
+            min-width: 500px;
+            margin: 0 auto;
+        }
+        ul.menu {
+            list-style: none;
+            padding: 10px 0;
+        }
+        ul.menu li{
+            padding: 0;
+            display: inline-block;
+            margin: 0 5px;
+            color: #d8d8d8;
+        }
+        ul.menu li:not(:first-child):before{
+            content: "|";
+            margin-right: 10px;
+        }
+        ul.menu li:first-child{
+            margin-left: 0;
+        }
+        ul.menu a{
+            text-decoration: none;
+            color: inherit;
+        }
+        ul.menu a:hover{
+            color: #cccccc;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <ul class="menu">
+            <li><a href="../docs/module-wflow.html">Documentation</a></li>
+            <li><a href="">Usage</a></li>
+            <li><a href="">Github</a></li>
+        </ul>
+    </div>
+    <div class="main">
+        <h1><b>wflow</b>.js</h1>
+        <h2>Representation of simple workflows with SVG</h2>
+        
+        <p>
+            This library uses <a href="http://svgjs.com/">svg.js</a> and <a href="https://jquery.com/">jQuery</a> 
+            for reperesentation of stages of some process. Example of workflow you can see
+            below. 
+        </p>
+        
+        <div id="example"></div>
+        
+        <h3>Example script:</h3>
+        
+        <pre><code></code></pre>
+
+    </div>
+    
+    <script src="../bower_components/jquery/dist/jquery.js"></script>
+    <script src="../bower_components/svg.js/dist/svg.min.js"></script>
+    <script src="../bower_components/highlight/src/highlight.min.js"></script>
+    <script src="../wflow.js"></script>
+    <script type="text/javascript" class="example">
+        
+var timer;
+
+function renderFlow(){
+    
+    // Create workflow and number of stages. Also this script will 
+    // randomly throw errors on some stages
+    
+    WF = new wflow.Flow("#example", {
+        height: 200,
+        dx: -50,
+        defaultImage: "../img/basic_gear.svg"
+    }).chain(
+        // Name of stage can be defined as string
+        "START", 
+        // or as object
+        {
+            label: "LOAD",
+            image: "../img/basic_clessidre.svg"
+        }, 
+        "INCLUDE", 
+        "CREATE",
+        {
+            label: "DONE",
+            image: "../img/basic_flag1.svg"
+        })
+    ;
+    
+    (function renderStage(stages, index, delay){
+        delay = delay || Math.random() * 2000 + 1000;
+        
+        var s = stages[index];
+        
+        if (index < stages.length){
+            WF.gotoStage(s);
+            
+            // Simulate errors
+            var gotError = Boolean(
+                s != "START" && 
+                s != "DONE" && 
+                Math.random() < 0.3
+            );
+            if (gotError){
+                WF.active.error();
+            } else {
+                timer = setTimeout(function(){
+                    renderStage(stages, index+1);
+                }, delay);
+            }
+            
+        }
+    })(["START", "LOAD", "INCLUDE",  "CREATE",  "DONE"], 0, 0)
+    
+}
+
+renderFlow();
+
+setInterval(function(){
+    
+    // Clear previous timer
+    clearTimeout(timer);
+    
+    // Destroy previous example
+    $("#example").empty();
+    
+    // Show new example
+    renderFlow();
+
+}, 15000);
+        
+    </script>
+    
+    <script>
+    
+    (function(){
+        var $pre = $("pre>code");
+        $pre.html($("script.example").text());
+        setTimeout(function(){
+            hljs.initHighlighting();
+        }, 0);
+    })()
+        
+    </script>
+    
+</body>
+</html>

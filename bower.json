@@ -20,5 +20,8 @@
   "dependencies": {
     "svg.js": "^2.3.0",
     "jquery": "^2.2.3"
+  },
+  "devDependencies": {
+    "highlight": "8.9"
   }
 }

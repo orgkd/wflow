@@ -1,0 +1,42 @@
+.wflow text,
+.wflow tspan {
+  font-size: 12px;
+  line-height: 12px;
+}
+.wflow svg {
+  fill: transparent;
+}
+.wflow polyline {
+  stroke: grey;
+  opacity: .2;
+}
+.wflow polyline.active {
+  opacity: 1;
+}
+.wflow .s-stage {
+  opacity: .3;
+}
+.wflow .s-stage.active,
+.wflow .s-stage.done {
+  opacity: 1;
+}
+.wflow .s-stage.error {
+  opacity: 1;
+}
+.wflow .s-stage.error .s-state {
+  fill: red;
+}
+.wflow .s-stage .s-icon {
+  fill: grey;
+  transform-origin: center;
+}
+.wflow .s-stage .s-progress,
+.wflow .s-stage .s-state {
+  fill: grey;
+}
+.wflow .s-stage .s-label {
+  fill: black;
+}
+.wflow .s-stage .s-label.done {
+  fill: green;
+}
